@@ -1,32 +1,32 @@
 let riotAPI = 'https://ddragon.leagueoflegends.com/cdn/14.19.1/data/en_US/champion.json'
-const imageTag = document.getElementById('characterImg');
+const inputTag = document.getElementById('search')
+const imageTag = document.getElementById('characterImg')
+let leagueChampions = []
 
 let getLeagueChampions = async () => {
-  let arrChamp = []
   let response = await axios.get(riotAPI)
     .then(res => { return res.data.data })
     .catch(err => { return err })
   Object.keys(response).forEach(item => {
-    arrChamp.push({
-      name: item.toLowerCase(),
-      image: `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${item}_0.jpg`
-    })
+    let elementTag = document.createElement('div')
+    elementTag.className = 'champion-box'
+    elementTag.id = `${item.toLowerCase()}`
+    elementTag.innerHTML = `<img class="champion" src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${item}_0.jpg" alt="champion">`
+    imageTag.appendChild(elementTag)
+    leagueChampions.push(item)
   })
-  return arrChamp
 }
 
 let renderInfo = async () => {
-  let champion = await getLeagueChampions()
+  await getLeagueChampions()
+  console.log(leagueChampions)
+}
 
-
-  // console.log(champion)
-  champion.forEach(item => {
-    let elementTag = document.createElement('div')
-    elementTag.className = 'champion-box'
-    elementTag.id = `${item.name}`
-    elementTag.innerHTML = `<img class="champion" src="${item.image}" alt="champion">`
-    imageTag.appendChild(elementTag) 
-  })
+let userInput = (event) => {
+  
 }
 
 renderInfo()
+
+inputTag.addEventListener('input', userInput)
+
