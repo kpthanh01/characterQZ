@@ -1,5 +1,5 @@
 let riotAPI = 'https://ddragon.leagueoflegends.com/cdn/14.19.1/data/en_US/champion.json'
-const inputTag = document.getElementById('search')
+const inputTag = document.getElementById('guess')
 const imageTag = document.getElementById('characterImg')
 let leagueChampions = []
 
@@ -23,11 +23,11 @@ let getLeagueChampions = async () => {
 
 let userGuess = (event) => {
   let guess = event.target.value
-  let remainingAnswers = leagueChampions
+  let remainingCharacters = leagueChampions
   if (guess.length > 1) {
-    remainingAnswers.forEach((item, index) => {
-      if(item === guess) {
-        remainingAnswers.splice(index, 1)
+    remainingCharacters.forEach((characterName, index) => {
+      if(characterName === guess) {
+        remainingCharacters.splice(index, 1)
       }
     })
   }
