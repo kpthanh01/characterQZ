@@ -1,7 +1,9 @@
 let riotAPI = 'https://ddragon.leagueoflegends.com/cdn/14.19.1/data/en_US/champion.json'
 const inputTag = document.getElementById('guess')
 const characterTag = document.getElementById('characterImg')
+const scoreTag = document.getElementById('score')
 let leagueChampions = []
+let counter = 0
 
 let renderInfo = async () => {
   await getLeagueChampions()
@@ -28,24 +30,28 @@ let getLeagueChampions = async () => {
     characterTag.appendChild(iconCardTag)
     leagueChampions.push(item.toLowerCase())
   })
+  scoreTag.innerText = `0/${leagueChampions.length}`
 }
 
 let userGuess = (event) => {
   let guess = event.target.value
-  let remainingCharacters = leagueChampions
-  if (guess.length > 1) {
-    remainingCharacters.forEach((characterName, index) => {
+  if (guess.length > 1 && leagueChampions.length !== 0) {
+    leagueChampions.forEach((characterName, index) => {
       let championIdTag = document.getElementById(characterName)
       let iconIdTag = document.getElementById(`${characterName}-HiddenIcon`)
-      if(characterName === guess) {
-        remainingCharacters.splice(index, 1)
+      if (characterName === guess) {
+        counter++
         inputTag.value = ''
         iconIdTag.style.display = 'none'
         championIdTag.style.display = 'inline'
+        scoreTag.innerText = `${counter}/${leagueChampions.length}`
       }
     })
+
   }
 }
+
+// Timer function
 
 renderInfo()
 
