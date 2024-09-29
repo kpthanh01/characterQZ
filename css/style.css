@@ -1,12 +1,23 @@
+img, div {
+  padding: 0;
+  margin: 0;
+}
+
 .timer-box, .score-box {
   display: none;
 }
 
-.champion-box {
-  display: inline;
+.images-container {
+
 }
 
 .champion {
-  width: 50px;
-  height: 50px;
+  display: none;
+  width: 100px;
+  height: 100px;
+}
+
+.hidden-champion-icon {
+  width: 100px;
+  height: 100px;
 }
