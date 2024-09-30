@@ -1,12 +1,19 @@
-img, div {
+img,
+div {
   padding: 0;
   margin: 0;
 }
 
-
-
 .float-left {
   float: left;
+}
+
+.notification {
+  display: none;
+  position: fixed;
+  width: 50%;
+  height: 50%;
+  background-color: gainsboro;
 }
 
 .pinned-container {
@@ -15,7 +22,10 @@ img, div {
   left: 0;
 }
 
-.input-box, .score-box, .timer-box {
+.input-box,
+.score-box,
+.timer-box,
+.give-up {
   font-size: 20px;
   padding: 10px;
   margin-right: 20px;
@@ -32,16 +42,19 @@ img, div {
 }
 
 .images-container {
-margin-top: 5em;
+  margin-top: 5em;
+}
+
+.champion,
+.hidden-champion-icon {
+  width: 165px;
+  height: 290px;
 }
 
 .champion {
   display: none;
-  width: 100px;
-  height: 100px;
 }
 
 .hidden-champion-icon {
-  width: 100px;
-  height: 100px;
+  display: inline;
 }

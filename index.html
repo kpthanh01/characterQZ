@@ -12,18 +12,24 @@
 
 <body>
   <header></header>
+  <section class="notification" onclick="clickOff()">
+    <h1>Congratulations!</h1>
+    <p>You guessed every character in <span id="timerScore">00:00:00</span>!</p>
+  </section>
   <section class="pinned-container">
     <div class="input-box float-left" aria-autocomplete="none">
       <label for="guess">Name all Characters</label>
       <input id="guess" type="text" placeholder="champion name">
     </div>
-    <div class="timer-box float-left">
-      <span>Timer</span><span id="timer"></span>
-    </div>
     <div class="score-box float-left">
       <span id="score"></span>
     </div>
-    <div></div>
+    <div class="timer-box float-left">
+      <span>Timer</span><span id="timer"></span>
+    </div>
+    <div class="give-up float-left">
+      <span id="giveUp" onclick="resetGame()">Restart</span>
+    </div>
   </section>
   <section id="characterImg" class="images-container">
   </section>

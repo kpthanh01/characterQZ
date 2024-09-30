@@ -2,6 +2,7 @@ let riotAPI = 'https://ddragon.leagueoflegends.com/cdn/14.19.1/data/en_US/champi
 const inputTag = document.getElementById('guess')
 const characterTag = document.getElementById('characterImg')
 const scoreTag = document.getElementById('score')
+const winnerTag = document.querySelector('.notification')
 let leagueChampions = []
 let counter = 0
 let totalCharacter = 0;
@@ -17,7 +18,7 @@ let getLeagueChampions = async () => {
   Object.keys(response).forEach(item => {
     let iconCardTag = document.createElement('img')
     let championImgTag = document.createElement('img')
-    championImgTag.setAttribute('src', `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${item}_0.jpg`)
+    championImgTag.setAttribute('src', `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${item}_0.jpg`)
     championImgTag.setAttribute('alt', 'champion')
     championImgTag.className = 'champion'
     championImgTag.id = `${item.toLowerCase()}`
@@ -50,11 +51,21 @@ let userGuess = (event) => {
     }
   })
   if (counter === totalCharacter) {
-    console.log('won quiz')
+    winnerTag.style.display = 'block'
   }
 }
 
-// Timer function
+let clickOff = () => {
+  winnerTag.style.display = 'none'
+}
+
+let resetGame = () => {
+  leagueChampions = []
+  counter = 0
+  totalCharacter = 0
+  characterTag.innerHTML = ''
+  renderInfo()
+}
 
 renderInfo()
 
