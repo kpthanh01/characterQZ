@@ -1,8 +1,10 @@
 let riotAPI = 'https://ddragon.leagueoflegends.com/cdn/14.19.1/data/en_US/champion.json'
+let riotSquareAPI = 'https://ddragon.leagueoflegends.com/cdn/14.19.1/img/champion/${item}.png'
 const inputTag = document.getElementById('guess')
 const characterTag = document.getElementById('characterImg')
 const scoreTag = document.getElementById('score')
 const winnerTag = document.querySelector('.notification')
+const revealAnswersTag = document.querySelector('.reveal-answers')
 let leagueChampions = []
 let counter = 0
 let totalCharacter = 0;
@@ -59,11 +61,26 @@ let clickOff = () => {
   winnerTag.style.display = 'none'
 }
 
+let giveUp = () => {
+  inputTag.disabled = true
+  leagueChampions.forEach(characterName => {
+    let championIdTag = document.getElementById(characterName)
+    let iconIdTag = document.getElementById(`${characterName}-HiddenIcon`)
+    let answers = document.createElement('p')
+    answers.innerText = characterName
+
+    revealAnswersTag.appendChild(answers)
+    iconIdTag.style.display = 'none'
+    championIdTag.style.display = 'inline'
+  })
+}
+
 let resetGame = () => {
   leagueChampions = []
   counter = 0
   totalCharacter = 0
   characterTag.innerHTML = ''
+  inputTag.disabled = false
   renderInfo()
 }
 

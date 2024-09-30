@@ -1,3 +1,7 @@
+body {
+  padding-top: 5em;
+}
+
 img,
 div {
   padding: 0;
@@ -25,7 +29,8 @@ div {
 .input-box,
 .score-box,
 .timer-box,
-.give-up {
+.give-up,
+.reset {
   font-size: 20px;
   padding: 10px;
   margin-right: 20px;
@@ -42,7 +47,7 @@ div {
 }
 
 .images-container {
-  margin-top: 5em;
+
 }
 
 .champion,
@@ -57,4 +62,14 @@ div {
 
 .hidden-champion-icon {
   display: inline;
+}
+
+.reveal-answers {
+ display: flex;
+ order: 5;
+ flex-wrap: wrap;
+}
+
+.reveal-answers p {
+  margin: 10px;
 }
