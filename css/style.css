@@ -3,12 +3,36 @@ img, div {
   margin: 0;
 }
 
+
+
+.float-left {
+  float: left;
+}
+
+.pinned-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.input-box, .score-box, .timer-box {
+  font-size: 20px;
+  padding: 10px;
+  margin-right: 20px;
+  background-color: aquamarine;
+  line-height: 30px;
+}
+
+.input-box input {
+  font-size: 20px;
+}
+
 .timer-box {
   display: none;
 }
 
 .images-container {
-
+margin-top: 5em;
 }
 
 .champion {

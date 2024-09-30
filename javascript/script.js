@@ -4,6 +4,7 @@ const characterTag = document.getElementById('characterImg')
 const scoreTag = document.getElementById('score')
 let leagueChampions = []
 let counter = 0
+let totalCharacter = 0;
 
 let renderInfo = async () => {
   await getLeagueChampions()
@@ -30,24 +31,26 @@ let getLeagueChampions = async () => {
     characterTag.appendChild(iconCardTag)
     leagueChampions.push(item.toLowerCase())
   })
+  totalCharacter = leagueChampions.length
   scoreTag.innerText = `0/${leagueChampions.length}`
 }
 
 let userGuess = (event) => {
   let guess = event.target.value
-  if (guess.length > 1 && leagueChampions.length !== 0) {
-    leagueChampions.forEach((characterName, index) => {
-      let championIdTag = document.getElementById(characterName)
-      let iconIdTag = document.getElementById(`${characterName}-HiddenIcon`)
-      if (characterName === guess) {
-        counter++
-        inputTag.value = ''
-        iconIdTag.style.display = 'none'
-        championIdTag.style.display = 'inline'
-        scoreTag.innerText = `${counter}/${leagueChampions.length}`
-      }
-    })
-
+  leagueChampions.forEach((characterName, index) => {
+    let championIdTag = document.getElementById(characterName)
+    let iconIdTag = document.getElementById(`${characterName}-HiddenIcon`)
+    if (characterName === guess) {
+      counter++
+      leagueChampions.splice(index, 1)
+      inputTag.value = ''
+      iconIdTag.style.display = 'none'
+      championIdTag.style.display = 'inline'
+      scoreTag.innerText = `${counter}/${totalCharacter}`
+    }
+  })
+  if (counter === totalCharacter) {
+    console.log('won quiz')
   }
 }
 
