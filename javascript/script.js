@@ -19,18 +19,15 @@ let getLeagueChampions = async () => {
     .catch(err => { return err })
   Object.keys(response).forEach(item => {
     let iconCardTag = document.createElement('img')
-    let championImgTag = document.createElement('img')
-    championImgTag.setAttribute('src', `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${item}_0.jpg`)
-    championImgTag.setAttribute('alt', 'champion')
-    championImgTag.className = 'champion'
-    championImgTag.id = `${item.toLowerCase()}`
+    let championContainer = document.createElement('div')
+    championContainer.id = `portrait-${item.toLowerCase()}`
+    championContainer.innerHTML = `<img class='champion' id='${item.toLowerCase()}' src='https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${item}_0.jpg' alt 'champion'>`
 
     iconCardTag.setAttribute('src', '/assets/leagueIcon.jpg')
     iconCardTag.setAttribute('alt', 'championHiddenIcon')
     iconCardTag.className = 'hidden-champion-icon'
     iconCardTag.id = `${item.toLowerCase()}-HiddenIcon`
-
-    characterTag.appendChild(championImgTag)
+    characterTag.appendChild(championContainer)
     characterTag.appendChild(iconCardTag)
     leagueChampions.push(item.toLowerCase())
   })
@@ -48,7 +45,7 @@ let userGuess = (event) => {
       leagueChampions.splice(index, 1)
       inputTag.value = ''
       iconIdTag.style.display = 'none'
-      championIdTag.style.display = 'inline'
+      championIdTag.style.display = 'block'
       scoreTag.innerText = `${counter}/${totalCharacter}`
     }
   })
@@ -66,12 +63,16 @@ let giveUp = () => {
   leagueChampions.forEach(characterName => {
     let championIdTag = document.getElementById(characterName)
     let iconIdTag = document.getElementById(`${characterName}-HiddenIcon`)
+    let portrait = document.getElementById(`portrait-${characterName}`)
     let answers = document.createElement('p')
+    console.log(portrait)
+    portrait.classList.add('error')
     answers.innerText = characterName
 
-    revealAnswersTag.appendChild(answers)
+    // revealAnswersTag.style.display = 'flex'
+    // revealAnswersTag.appendChild(answers)
     iconIdTag.style.display = 'none'
-    championIdTag.style.display = 'inline'
+    championIdTag.style.display = 'block'
   })
 }
 
@@ -79,12 +80,26 @@ let resetGame = () => {
   leagueChampions = []
   counter = 0
   totalCharacter = 0
+  revealAnswersTag.innerHTML = ''
+  revealAnswersTag.style.display = 'none'
   characterTag.innerHTML = ''
   inputTag.disabled = false
   renderInfo()
+}
+
+let changeScroll = () => {
+  let inputContainer = document.querySelector('.pinned-container')
+  this.scrollY > 100 ? inputContainer.classList.add('pinned-fixed') : inputContainer.classList.remove('pinned-fixed')
 }
 
 renderInfo()
 
 inputTag.addEventListener('input', userGuess)
 
+window.addEventListener("scroll", changeScroll, false)
+
+
+function test(event) {
+  console.log(event)
+  // let back = document.querySelector(`back${}`)
+}
