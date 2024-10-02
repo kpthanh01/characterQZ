@@ -21,13 +21,15 @@
   </header>
   <section class="notification" onclick="clickOff()">
     <h1>Congratulations!</h1>
-    <p>You guessed every character in <span id="timerScore">00:00:00</span>!</p>
+    <h2>You guessed every character</h2>
   </section>
   <section class="pinned-container">
     <input id="guess" class="input-box"  type="text" placeholder="Guess Names" aria-autocomplete="none">
-    <span id="score" class="score-box"></span>
-    <span class="give-up" onclick="giveUp()">Give Up</span>
-    <span class="reset" onclick="resetGame()">Reset</span>
+    <div class="btn-container">
+      <span id="score" class="score-box"></span>
+      <span class="give-up" onclick="giveUp()">Give Up</span>
+      <span class="reset" onclick="resetGame()">Reset</span>
+    </div>
   </section>
   <section class="reveal-answers"></section>
   <section id="characterImg" class="images-container" onclick="test(event)">

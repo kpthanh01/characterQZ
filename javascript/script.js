@@ -9,9 +9,9 @@ let leagueChampions = []
 let counter = 0
 let totalCharacter = 0;
 
-let renderInfo = async () => {
-  await getLeagueChampions()
-}
+// let renderInfo = async () => {
+//   await getLeagueChampions()
+// }
 
 let getLeagueChampions = async () => {
   let response = await axios.get(riotAPI)
@@ -50,7 +50,8 @@ let userGuess = (event) => {
     }
   })
   if (counter === totalCharacter) {
-    winnerTag.style.display = 'block'
+    winnerTag.style.display = 'flex'
+    inputTag.disabled = true
   }
 }
 
@@ -64,7 +65,6 @@ let giveUp = () => {
     let iconIdTag = document.getElementById(`${characterName}-HiddenIcon`)
     let portrait = document.getElementById(`portrait-${characterName}`)
     let answers = document.createElement('p')
-    console.log(portrait)
     portrait.classList.add('error')
     answers.innerText = characterName
 
@@ -77,11 +77,11 @@ let resetGame = () => {
   leagueChampions = []
   counter = 0
   totalCharacter = 0
-  revealAnswersTag.innerHTML = ''
-  revealAnswersTag.style.display = 'none'
+
   characterTag.innerHTML = ''
   inputTag.disabled = false
-  renderInfo()
+  // renderInfo()
+  getLeagueChampions()
 }
 
 let changeScroll = () => {
@@ -89,7 +89,11 @@ let changeScroll = () => {
   this.scrollY > 100 ? inputContainer.classList.add('pinned-fixed') : inputContainer.classList.remove('pinned-fixed')
 }
 
-renderInfo()
+// renderInfo()
+
+window.addEventListener('load', () => {
+  getLeagueChampions()
+})
 
 inputTag.addEventListener('input', userGuess)
 

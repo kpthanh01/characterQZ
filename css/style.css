@@ -5,10 +5,15 @@ body {
 }
 
 h1,
+h2,
 img,
 div {
   padding: 0;
   margin: 0;
+}
+
+h1 {
+  font-size: 2.8em;
 }
 
 header {
@@ -22,63 +27,93 @@ header {
 ul {
   width: 40%;
   font-size: 20px;
-  display: flex;
-  justify-content: space-around;
   list-style-type: none;
+}
+
+li {
+  display: none;
+  padding-right: 25px;
 }
 
 .notification {
   display: none;
+  text-align: center;
+  color: white;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: fixed;
-  width: 50%;
-  height: 50%;
-  background-color: gainsboro;
+  left: 50%;
+  transform: translate(-50%, 80px);
+  width: 80%;
+  height: 35%;
+  background-color: black;
+  border: 3px solid #ddc476;
+  z-index: 4;
+}
+
+.notification h1 {
+  font-size: 40px;
+}
+
+.notification h2 {
+  margin-top: 10px;
+  font-size: 30px;
 }
 
 .pinned-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin: 20px auto;
   padding: 20px 5px;
   border: 2px solid #ddc476;
-  width: 50%;
+  width: 95%;
   background-color: black;
 }
 
 .pinned-fixed {
+  width: 95%;
   position: fixed;
   top: 0;
-  left: 25%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 3;
 }
 
 .input-box,
 .score-box,
-.timer-box,
 .give-up,
 .reset {
   color: #ddc476;
   font-size: 20px;
   padding: 8px;
-  margin-right: 20px;
   background-color: #0c1d28;
   line-height: 30px;
   cursor: pointer;
   border: 1px solid #ddc476;
 }
 
+.give-up:hover, .reset:hover {
+  text-decoration: underline;
+}
+
+
 .input-box {
   color: #ddc476;
-  font-size: 20px;
+  font-size: 30px;
   background: linear-gradient(0deg, #172129, #06121d 20%, #000);
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .input-box:focus {
   outline: none;
 }
 
-.timer-box {
-  display: none;
+.btn-container {
+  display: flex;
+  justify-content: center;
 }
 
 .portrait {
@@ -107,12 +142,13 @@ ul {
 .champion-name {
   background-color: #131329;
   color: white;
-  font-size: 20px;
+  font-size: 25px;
   padding: 4px;
   position: absolute;
   bottom: 12px;
   margin: auto;
-  left: 34%;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 .hidden-champion-icon {
@@ -124,9 +160,52 @@ ul {
 }
 
 footer {
+  font-size: 20px;
   color: white;
   background-color: #474747e0;
   display: flex;
   padding: 5px 20px;
   justify-content: space-between;
 }
+
+@media (min-width: 1024px) {
+  li {
+    display: inline;
+  }
+
+  .notification {
+    width: 30em;
+  }
+  
+  .pinned-container {
+    width: 50%;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .input-box {
+    margin-bottom: 0;
+    width: 50%;
+    font-size: 20px;
+    margin-right: 20px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .notification {
+    width: 30em;
+  }
+  .pinned-container {
+    width: 75%;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .input-box {
+    margin-bottom: 0;
+    width: 50%;
+    font-size: 28px;
+    
+  }
+}
+
