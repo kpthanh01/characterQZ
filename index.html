@@ -13,33 +13,29 @@
 <body>
   <header>
     <h1>CharacterQZ</h1>
+    <ul>
+      <li>League of Legends</li>
+      <li>Pokemon</li>
+      <li>Ultimate</li>
+    </ul>
   </header>
   <section class="notification" onclick="clickOff()">
     <h1>Congratulations!</h1>
     <p>You guessed every character in <span id="timerScore">00:00:00</span>!</p>
   </section>
   <section class="pinned-container">
-    <div class="input-box" aria-autocomplete="none">
-      <label for="guess">Name all Characters</label>
-      <input id="guess" type="text" placeholder="champion name">
-    </div>
-    <div class="score-box">
-      <span id="score"></span>
-    </div>
-    <div class="timer-box">
-      <span>Timer</span><span id="timer"></span>
-    </div>
-    <div class="give-up">
-      <span onclick="giveUp()">Give Up</span>
-    </div>
-    <div class="reset">
-      <span onclick="resetGame()">Reset</span>
-    </div>
+    <input id="guess" class="input-box"  type="text" placeholder="Guess Names" aria-autocomplete="none">
+    <span id="score" class="score-box"></span>
+    <span class="give-up" onclick="giveUp()">Give Up</span>
+    <span class="reset" onclick="resetGame()">Reset</span>
   </section>
   <section class="reveal-answers"></section>
   <section id="characterImg" class="images-container" onclick="test(event)">
   </section>
-  <footer></footer>
+  <footer>
+    <p>CharacterQZ</p>
+    <p>Designed by Kevin Pham</p>
+  </footer>
 </body>
 
 </html>
