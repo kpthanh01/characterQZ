@@ -122,10 +122,26 @@ li {
   height: 290px;
 }
 
+.pokemon-portrait {
+  display: none;
+}
+
 .images-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+
+  background-color: white;
+  gap: 10px;
+  padding: 20px;
+}
+
+.pokemon {
+  width: 50px;
+}
+
+.hidden-pokemon-icon {
+  width: 30px;
 }
 
 .champion,

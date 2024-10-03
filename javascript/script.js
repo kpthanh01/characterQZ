@@ -5,24 +5,11 @@ const characterTag = document.getElementById('characterImg')
 const scoreTag = document.getElementById('score')
 const winnerTag = document.querySelector('.notification')
 const revealAnswersTag = document.querySelector('.reveal-answers')
-let currentQuiz = 'league'
+let currentQuiz = 'pokemon'
 let leagueChampions = []
 let pokemonList = []
 let counter = 0
 let totalCharacter = 0;
-
-let renderInfo = async () => {
-  switch(currentQuiz) {
-    case 'pokemon':
-      await getPokemon()
-      break
-
-    default:
-      await getLeagueChampions()
-  }
-  // await getLeagueChampions()
-  // await getPokemon()
-}
 
 let getLeagueChampions = async () => {
   let response = await axios.get(riotAPI)
@@ -33,52 +20,41 @@ let getLeagueChampions = async () => {
     let championContainer = document.createElement('div')
     championContainer.id = `portrait-${item.toLowerCase()}`
     championContainer.classList.add(`portrait`)
-    championContainer.innerHTML = `<img class='champion' id='${item.toLowerCase()}' src='https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${item}_0.jpg' alt 'champion'><div class='champion-name'>${item}</div>`
-    iconCardTag.innerHTML = `<img class='hidden-champion-icon' id='${item.toLowerCase()}-HiddenIcon' src='/assets/leagueIcon.jpg' alt 'championHiddenIcon'>`
+    championContainer.innerHTML = `<img class='champion' id='${item.toLowerCase()}' src='https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${item}_0.jpg' alt='champion'><div class='champion-name'>${item}</div>`
+    iconCardTag.innerHTML = `<img class='hidden-champion-icon' id='${item.toLowerCase()}-HiddenIcon' src='/assets/leagueIcon.jpg' alt='championHiddenIcon'>`
 
     characterTag.appendChild(championContainer)
     characterTag.appendChild(iconCardTag)
     leagueChampions.push(item.toLowerCase())
   })
   totalCharacter = leagueChampions.length
-  scoreTag.innerText = `0/${leagueChampions.length}`
+  scoreTag.innerText = `0/${totalCharacter}`
 }
 
 let getPokemon = async () => {
+  let pokemonData = []
+  for(let i=1; i<152; i++) {
+    let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`)
+    .then(res => {return res.data})
+    .catch(err => {return err})
+    pokemonData.push(response)
+  }
+  pokemonList = pokemonData
+  console.log(pokemonList)
+  pokemonData.forEach(item => {
+    console.log(item)
+    let iconCardTag = document.createElement('div')
+    let pokemonContainer = document.createElement('div')
+    pokemonContainer.id = `portrait-${item.name}`
+    pokemonContainer.classList.add(`pokemon-portrait`)
+    pokemonContainer.innerHTML = `<img class='pokemon' id='${item.name}' src='${item.sprites.front_default}' alt='pokemon'>`
+    iconCardTag.innerHTML = `<img class='hidden-pokemon-icon' id='${item.name}-HiddenIcon' src='/assets/pokeball.png' alt='pokemonball'>`
 
-  let response = await axios.get(pokemonListAPI)
-    .then(res => { return res.data.results })
-    .catch(err => { return err })
-
-  response.forEach(async (item, index) => {
-    let pokemonData = {
-      id: '',
-      name: '',
-      sprite: '',
-    }
-    let currentPokemonData = await axios.get(`https://pokeapi.co/api/v2/pokemon/${index + 1}`)
-      .then(res => { return res.data })
-      .catch(err => { return err })
-    pokemonData.id = currentPokemonData.id
-    pokemonData.name = item.name;
-    pokemonData.sprite = currentPokemonData.sprites.front_default
-
-    pokemonList.push(pokemonData)
+    characterTag.appendChild(pokemonContainer)
+    characterTag.appendChild(iconCardTag)
   })
-  // Object.keys(response).forEach(item => {
-  //   let iconCardTag = document.createElement('div')
-  //   let championContainer = document.createElement('div')
-  //   championContainer.id = `portrait-${item.toLowerCase()}`
-  //   championContainer.classList.add(`portrait`)
-  //   championContainer.innerHTML = `<img class='champion' id='${item.toLowerCase()}' src='https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${item}_0.jpg' alt 'champion'><div class='champion-name'>${item}</div>`
-  //   iconCardTag.innerHTML = `<img class='hidden-champion-icon' id='${item.toLowerCase()}-HiddenIcon' src='/assets/leagueIcon.jpg' alt 'championHiddenIcon'>`
-
-  //   characterTag.appendChild(championContainer)
-  //   characterTag.appendChild(iconCardTag)
-  //   leagueChampions.push(item.toLowerCase())
-  // })
-  // totalCharacter = leagueChampions.length
-  // scoreTag.innerText = `0/${leagueChampions.length}`
+  totalCharacter = pokemonList.length
+  scoreTag.innerText = `0/${totalCharacter}`
 }
 
 let userGuess = (event) => {
@@ -141,11 +117,18 @@ let switchQuiz = () => {
 
 }
 
+let renderInfo = async () => {
+  switch (currentQuiz) {
+    case "pokemon":
+      await getPokemon()
+      break
+
+    default:
+      await getLeagueChampions()
+  }
+}
+
 renderInfo()
-// window.addEventListener('load', () => {
-//   getLeagueChampions()
-//   getPokemon()
-// })
 
 inputTag.addEventListener('input', userGuess)
 
