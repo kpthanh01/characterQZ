@@ -131,17 +131,21 @@ li {
   flex-wrap: wrap;
   justify-content: center;
 
-  background-color: white;
+  /*  */
+  /* background-color: white;
   gap: 10px;
-  padding: 20px;
+  padding: 20px; */
 }
 
 .pokemon {
   width: 50px;
+  /* margin: -13px -20px -7px; */
+  display: none;
 }
 
 .hidden-pokemon-icon {
-  width: 30px;
+  width: 50px;
+  display: inline;
 }
 
 .champion,

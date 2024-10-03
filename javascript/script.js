@@ -5,11 +5,23 @@ const characterTag = document.getElementById('characterImg')
 const scoreTag = document.getElementById('score')
 const winnerTag = document.querySelector('.notification')
 const revealAnswersTag = document.querySelector('.reveal-answers')
-let currentQuiz = 'pokemon'
+let currentQuiz = 'league'
 let leagueChampions = []
 let pokemonList = []
 let counter = 0
 let totalCharacter = 0;
+
+let renderInfo = async () => {
+   await getLeagueChampions()
+  // switch (currentQuiz) {
+  //   case "pokemon":
+  //     await getPokemon()
+  //     break
+
+  //   default:
+  //     await getLeagueChampions()
+  // }
+}
 
 let getLeagueChampions = async () => {
   let response = await axios.get(riotAPI)
@@ -33,22 +45,24 @@ let getLeagueChampions = async () => {
 
 let getPokemon = async () => {
   let pokemonData = []
-  for(let i=1; i<152; i++) {
+  for (let i = 1; i < 152; i++) {
     let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`)
-    .then(res => {return res.data})
-    .catch(err => {return err})
+      .then(res => { return res.data })
+      .catch(err => { return err })
     pokemonData.push(response)
   }
   pokemonList = pokemonData
-  console.log(pokemonList)
   pokemonData.forEach(item => {
-    console.log(item)
-    let iconCardTag = document.createElement('div')
-    let pokemonContainer = document.createElement('div')
+    let iconCardTag = document.createElement('img')
+    let pokemonContainer = document.createElement('img')
     pokemonContainer.id = `portrait-${item.name}`
-    pokemonContainer.classList.add(`pokemon-portrait`)
-    pokemonContainer.innerHTML = `<img class='pokemon' id='${item.name}' src='${item.sprites.front_default}' alt='pokemon'>`
-    iconCardTag.innerHTML = `<img class='hidden-pokemon-icon' id='${item.name}-HiddenIcon' src='/assets/pokeball.png' alt='pokemonball'>`
+    pokemonContainer.classList.add(`pokemon`)
+    pokemonContainer.setAttribute('src', `${item.sprites.front_default}`)
+    iconCardTag.id = `${item.name}-HiddenIcon`
+    iconCardTag.classList.add(`hidden-pokemon-icon`)
+    iconCardTag.setAttribute('src', `/assets/pokeball.png`)
+    // pokemonContainer.innerHTML = `<img class='pokemon' id='${item.name}' src='${item.sprites.front_default}' alt='pokemon'>`
+    // iconCardTag.innerHTML = `<img class='hidden-pokemon-icon' id='${item.name}-HiddenIcon' src='/assets/pokeball.png' alt='pokemonball'>`
 
     characterTag.appendChild(pokemonContainer)
     characterTag.appendChild(iconCardTag)
@@ -58,7 +72,7 @@ let getPokemon = async () => {
 }
 
 let userGuess = (event) => {
-  let guess = event.target.value
+  let guess = event.target.value.toLowerCase()
   leagueChampions.forEach((characterName, index) => {
     let championIdTag = document.getElementById(characterName)
     let iconIdTag = document.getElementById(`${characterName}-HiddenIcon`)
@@ -77,6 +91,25 @@ let userGuess = (event) => {
     winnerTag.style.display = 'flex'
     inputTag.disabled = true
   }
+  // if (currentQuiz == 'league') {
+
+  // } else {
+  //   console.log('hello')
+  //   pokemonList.forEach((item, index) => {
+  //     console.log(item.name)
+  //     let iconIdTag = document.getElementById(`${item.name}-HiddenIcon`)
+  //     let portrait = document.getElementById(`portrait-${item.name}`)
+  //     if (item.name === guess) {
+  //       counter++
+  //       pokemonList.splice(index, 1)
+  //       inputTag.value = ''
+  //       iconIdTag.style.display = 'none'
+  //       portrait.style.display = 'inline'
+  //       scoreTag.innerText = `${counter}/${totalCharacter}`
+  //     }
+  //   })
+  // }
+
 }
 
 let clickOff = () => {
@@ -99,13 +132,22 @@ let giveUp = () => {
 
 let resetGame = () => {
   leagueChampions = []
+  pokemonList = []
   counter = 0
   totalCharacter = 0
 
   characterTag.innerHTML = ''
   inputTag.disabled = false
-  // renderInfo()
+
   getLeagueChampions()
+  // switch (currentQuiz) {
+  //   case "pokemon":
+  //     getPokemon()
+  //     break
+
+  //   default:
+  //     getLeagueChampions()
+  // }
 }
 
 let changeScroll = () => {
@@ -115,17 +157,6 @@ let changeScroll = () => {
 
 let switchQuiz = () => {
 
-}
-
-let renderInfo = async () => {
-  switch (currentQuiz) {
-    case "pokemon":
-      await getPokemon()
-      break
-
-    default:
-      await getLeagueChampions()
-  }
 }
 
 renderInfo()
