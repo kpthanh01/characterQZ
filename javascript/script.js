@@ -96,6 +96,10 @@ let userGuess = (event) => {
       let iconIdTag = document.getElementById(`${item.name}-HiddenIcon`)
       let portrait = document.getElementById(`portrait-${item.name}`)
       if (item.name === guess) {
+        console.log(item)
+        let audio = new Audio(item.cries.latest)
+        audio.volume = 0.05
+        audio.play()
         counter++
         pokemonList.splice(index, 1)
         inputTag.value = ''
@@ -107,9 +111,7 @@ let userGuess = (event) => {
   }
 }
 
-let clickOff = () => {
-  winnerTag.style.display = 'none'
-}
+
 
 let giveUp = () => {
   inputTag.disabled = true
@@ -156,6 +158,12 @@ let changeScroll = () => {
   this.scrollY > 100 ? inputContainer.classList.add('pinned-fixed') : inputContainer.classList.remove('pinned-fixed')
 }
 
+let clickOff = () => {
+  winnerTag.style.display = 'none'
+}
+
+
+// Event Listeners and Initial Render of the Game
 renderInfo()
 
 inputTag.addEventListener('input', userGuess)
