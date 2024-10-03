@@ -1,22 +1,25 @@
 let riotAPI = 'https://ddragon.leagueoflegends.com/cdn/14.19.1/data/en_US/champion.json'
-let pokemonListAPI = 'https://pokeapi.co/api/v2/pokemon?limit=151&offset=0'
+let overWatchAPI = 'https://overfast-api.tekrop.fr/heroes'
 const inputTag = document.getElementById('guess')
 const characterTag = document.getElementById('characterImg')
 const scoreTag = document.getElementById('score')
 const winnerTag = document.querySelector('.notification')
 const revealAnswersTag = document.querySelector('.reveal-answers')
-let currentQuiz = 'league'
+let currentQuiz = 'overwatch'
 let leagueChampions = []
 let pokemonList = []
+let overwatchList = []
 let counter = 0
 let totalCharacter = 0;
 
 let renderInfo = async () => {
   switch (currentQuiz) {
-    case "pokemon":
+    case 'pokemon':
       await getPokemon()
       break
-
+    case 'overwatch':
+      await getOverwatch()
+      break
     default:
       await getLeagueChampions()
   }
@@ -68,6 +71,28 @@ let getPokemon = async () => {
   scoreTag.innerText = `0/${totalCharacter}`
 }
 
+let getOverwatch = async () => {
+  let response = await axios.get(overWatchAPI)
+    .then(res => { return res.data })
+    .catch(err => { return err })
+  overwatchList = response
+  overwatchList.forEach(item => {
+    let iconCardTag = document.createElement('img')
+    let championContainer = document.createElement('img')
+    championContainer.id = `portrait-${item.name.toLowerCase()}`
+    championContainer.classList.add(`overwatch`)
+    championContainer.setAttribute('src', `${item.portrait}`)
+    iconCardTag.id = `${item.name.toLowerCase()}-HiddenIcon`
+    iconCardTag.classList.add(`hidden-overwatch-icon`)
+    iconCardTag.setAttribute('src', '/assets/overwatch.png')
+
+    characterTag.appendChild(championContainer)
+    characterTag.appendChild(iconCardTag)
+  })
+  totalCharacter = overwatchList.length
+  scoreTag.innerText = `0/${totalCharacter}`
+}
+
 let userGuess = (event) => {
   let guess = event.target.value.toLowerCase()
 
@@ -90,9 +115,8 @@ let userGuess = (event) => {
       winnerTag.style.display = 'flex'
       inputTag.disabled = true
     }
-  } else {
+  } else if (currentQuiz == 'pokemon') {
     pokemonList.forEach((item, index) => {
-      console.log(item.name)
       let iconIdTag = document.getElementById(`${item.name}-HiddenIcon`)
       let portrait = document.getElementById(`portrait-${item.name}`)
       if (item.name === guess) {
@@ -108,14 +132,27 @@ let userGuess = (event) => {
         scoreTag.innerText = `${counter}/${totalCharacter}`
       }
     })
+  } else if (currentQuiz == 'overwatch') {
+    overwatchList.forEach((item, index) => {
+      let iconIdTag = document.getElementById(`${item.name.toLowerCase()}-HiddenIcon`)
+      let portrait = document.getElementById(`portrait-${item.name.toLowerCase()}`)
+      console.log(item)
+      if (item.name.toLowerCase() === guess) {
+        console.log(item)
+        counter++
+        overwatchList.splice(index, 1)
+        inputTag.value = ''
+        iconIdTag.style.display = 'none'
+        portrait.style.display = 'inline'
+        scoreTag.innerText = `${counter}/${totalCharacter}`
+      }
+    })
   }
 }
 
-
-
 let giveUp = () => {
   inputTag.disabled = true
-  if (currentQuiz == "league") {
+  if (currentQuiz == 'league') {
     leagueChampions.forEach(characterName => {
       let iconIdTag = document.getElementById(`${characterName}-HiddenIcon`)
       let portrait = document.getElementById(`portrait-${characterName}`)
@@ -124,10 +161,18 @@ let giveUp = () => {
       iconIdTag.style.display = 'none'
       portrait.style.display = 'block'
     })
-  } else {
+  } else if (currentQuiz == 'pokemon') {
     pokemonList.forEach(item => {
       let iconIdTag = document.getElementById(`${item.name}-HiddenIcon`)
       let portrait = document.getElementById(`portrait-${item.name}`)
+
+      iconIdTag.style.display = 'none'
+      portrait.style.display = 'block'
+    })
+  } else if (currentQuiz == 'overwatch') {
+    overwatchList.forEach(item => {
+      let iconIdTag = document.getElementById(`${item.name.toLowerCase()}-HiddenIcon`)
+      let portrait = document.getElementById(`portrait-${item.name.toLowerCase()}`)
 
       iconIdTag.style.display = 'none'
       portrait.style.display = 'block'

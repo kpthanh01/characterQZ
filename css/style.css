@@ -145,9 +145,18 @@ li:hover {
   padding: 20px; */
 }
 
+.overwatch {
+  width: 165px;
+  display: none;
+}
+
+.hidden-overwatch-icon {
+  width: 165px;
+  display: inline;
+}
+
 .pokemon {
   width: 50px;
-  /* margin: -13px -20px -7px; */
   display: none;
 }
 
