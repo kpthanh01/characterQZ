@@ -14,8 +14,8 @@
   <header>
     <h1>CharacterQZ</h1>
     <ul>
-      <li>League of Legends</li>
-      <li>Pokemon</li>
+      <li onclick="switchQuiz('league')">League of Legends</li>
+      <li onclick="switchQuiz('pokemon')">Pokemon</li>
       <li>Ultimate</li>
     </ul>
   </header>
@@ -24,7 +24,7 @@
     <h2>You guessed every character</h2>
   </section>
   <section class="pinned-container">
-    <input id="guess" class="input-box"  type="text" placeholder="Guess Names" aria-autocomplete="none">
+    <input id="guess" class="input-box"  type="text" placeholder="Guess Name" aria-autocomplete="none">
     <div class="btn-container">
       <span id="score" class="score-box"></span>
       <span class="give-up" onclick="giveUp()">Give Up</span>

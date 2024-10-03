@@ -2,6 +2,9 @@ body {
   padding: 0;
   margin: 0;
   background-color: #0a1625;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 h1,
@@ -33,7 +36,11 @@ ul {
 li {
   display: none;
   padding-right: 25px;
+  cursor: pointer;
 }
+
+li:hover {
+  color: greenyellow;}
 
 .notification {
   display: none;
@@ -94,7 +101,8 @@ li {
   border: 1px solid #ddc476;
 }
 
-.give-up:hover, .reset:hover {
+.give-up:hover,
+.reset:hover {
   text-decoration: underline;
 }
 
@@ -186,6 +194,7 @@ footer {
   display: flex;
   padding: 5px 20px;
   justify-content: space-between;
+  margin-top: auto;
 }
 
 @media (min-width: 1024px) {
@@ -196,7 +205,7 @@ footer {
   .notification {
     width: 30em;
   }
-  
+
   .pinned-container {
     width: 50%;
     flex-direction: row;
@@ -215,6 +224,7 @@ footer {
   .notification {
     width: 30em;
   }
+
   .pinned-container {
     width: 75%;
     flex-direction: row;
@@ -225,7 +235,6 @@ footer {
     margin-bottom: 0;
     width: 50%;
     font-size: 28px;
-    
+
   }
 }
-

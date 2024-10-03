@@ -12,15 +12,14 @@ let counter = 0
 let totalCharacter = 0;
 
 let renderInfo = async () => {
-   await getLeagueChampions()
-  // switch (currentQuiz) {
-  //   case "pokemon":
-  //     await getPokemon()
-  //     break
+  switch (currentQuiz) {
+    case "pokemon":
+      await getPokemon()
+      break
 
-  //   default:
-  //     await getLeagueChampions()
-  // }
+    default:
+      await getLeagueChampions()
+  }
 }
 
 let getLeagueChampions = async () => {
@@ -61,8 +60,6 @@ let getPokemon = async () => {
     iconCardTag.id = `${item.name}-HiddenIcon`
     iconCardTag.classList.add(`hidden-pokemon-icon`)
     iconCardTag.setAttribute('src', `/assets/pokeball.png`)
-    // pokemonContainer.innerHTML = `<img class='pokemon' id='${item.name}' src='${item.sprites.front_default}' alt='pokemon'>`
-    // iconCardTag.innerHTML = `<img class='hidden-pokemon-icon' id='${item.name}-HiddenIcon' src='/assets/pokeball.png' alt='pokemonball'>`
 
     characterTag.appendChild(pokemonContainer)
     characterTag.appendChild(iconCardTag)
@@ -73,43 +70,41 @@ let getPokemon = async () => {
 
 let userGuess = (event) => {
   let guess = event.target.value.toLowerCase()
-  leagueChampions.forEach((characterName, index) => {
-    let championIdTag = document.getElementById(characterName)
-    let iconIdTag = document.getElementById(`${characterName}-HiddenIcon`)
-    let portrait = document.getElementById(`portrait-${characterName}`)
-    if (characterName === guess) {
-      counter++
-      leagueChampions.splice(index, 1)
-      inputTag.value = ''
-      iconIdTag.style.display = 'none'
-      portrait.style.display = 'block'
-      championIdTag.scrollIntoView({ behavior: "smooth", block: "end" })
-      scoreTag.innerText = `${counter}/${totalCharacter}`
+
+  if (currentQuiz == 'league') {
+    leagueChampions.forEach((characterName, index) => {
+      let championIdTag = document.getElementById(characterName)
+      let iconIdTag = document.getElementById(`${characterName}-HiddenIcon`)
+      let portrait = document.getElementById(`portrait-${characterName}`)
+      if (characterName === guess) {
+        counter++
+        leagueChampions.splice(index, 1)
+        inputTag.value = ''
+        iconIdTag.style.display = 'none'
+        portrait.style.display = 'block'
+        championIdTag.scrollIntoView({ behavior: "smooth", block: "end" })
+        scoreTag.innerText = `${counter}/${totalCharacter}`
+      }
+    })
+    if (counter === 2) {
+      winnerTag.style.display = 'flex'
+      inputTag.disabled = true
     }
-  })
-  if (counter === totalCharacter) {
-    winnerTag.style.display = 'flex'
-    inputTag.disabled = true
+  } else {
+    pokemonList.forEach((item, index) => {
+      console.log(item.name)
+      let iconIdTag = document.getElementById(`${item.name}-HiddenIcon`)
+      let portrait = document.getElementById(`portrait-${item.name}`)
+      if (item.name === guess) {
+        counter++
+        pokemonList.splice(index, 1)
+        inputTag.value = ''
+        iconIdTag.style.display = 'none'
+        portrait.style.display = 'inline'
+        scoreTag.innerText = `${counter}/${totalCharacter}`
+      }
+    })
   }
-  // if (currentQuiz == 'league') {
-
-  // } else {
-  //   console.log('hello')
-  //   pokemonList.forEach((item, index) => {
-  //     console.log(item.name)
-  //     let iconIdTag = document.getElementById(`${item.name}-HiddenIcon`)
-  //     let portrait = document.getElementById(`portrait-${item.name}`)
-  //     if (item.name === guess) {
-  //       counter++
-  //       pokemonList.splice(index, 1)
-  //       inputTag.value = ''
-  //       iconIdTag.style.display = 'none'
-  //       portrait.style.display = 'inline'
-  //       scoreTag.innerText = `${counter}/${totalCharacter}`
-  //     }
-  //   })
-  // }
-
 }
 
 let clickOff = () => {
@@ -118,16 +113,25 @@ let clickOff = () => {
 
 let giveUp = () => {
   inputTag.disabled = true
-  leagueChampions.forEach(characterName => {
-    let iconIdTag = document.getElementById(`${characterName}-HiddenIcon`)
-    let portrait = document.getElementById(`portrait-${characterName}`)
-    let answers = document.createElement('p')
-    portrait.classList.add('error')
-    answers.innerText = characterName
+  if (currentQuiz == "league") {
+    leagueChampions.forEach(characterName => {
+      let iconIdTag = document.getElementById(`${characterName}-HiddenIcon`)
+      let portrait = document.getElementById(`portrait-${characterName}`)
+      portrait.classList.add('error')
 
-    iconIdTag.style.display = 'none'
-    portrait.style.display = 'block'
-  })
+      iconIdTag.style.display = 'none'
+      portrait.style.display = 'block'
+    })
+  } else {
+    pokemonList.forEach(item => {
+      let iconIdTag = document.getElementById(`${item.name}-HiddenIcon`)
+      let portrait = document.getElementById(`portrait-${item.name}`)
+
+      iconIdTag.style.display = 'none'
+      portrait.style.display = 'block'
+    })
+  }
+
 }
 
 let resetGame = () => {
@@ -139,24 +143,17 @@ let resetGame = () => {
   characterTag.innerHTML = ''
   inputTag.disabled = false
 
-  getLeagueChampions()
-  // switch (currentQuiz) {
-  //   case "pokemon":
-  //     getPokemon()
-  //     break
+  renderInfo()
+}
 
-  //   default:
-  //     getLeagueChampions()
-  // }
+let switchQuiz = (quiz) => {
+  currentQuiz = quiz
+  resetGame()
 }
 
 let changeScroll = () => {
   let inputContainer = document.querySelector('.pinned-container')
   this.scrollY > 100 ? inputContainer.classList.add('pinned-fixed') : inputContainer.classList.remove('pinned-fixed')
-}
-
-let switchQuiz = () => {
-
 }
 
 renderInfo()
