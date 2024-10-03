@@ -111,7 +111,7 @@ let userGuess = (event) => {
         scoreTag.innerText = `${counter}/${totalCharacter}`
       }
     })
-    if (counter === 2) {
+    if (counter === totalCharacter) {
       winnerTag.style.display = 'flex'
       inputTag.disabled = true
     }
@@ -132,6 +132,10 @@ let userGuess = (event) => {
         scoreTag.innerText = `${counter}/${totalCharacter}`
       }
     })
+    if (counter === totalCharacter) {
+      winnerTag.style.display = 'flex'
+      inputTag.disabled = true
+    }
   } else if (currentQuiz == 'overwatch') {
     overwatchList.forEach((item, index) => {
       let iconIdTag = document.getElementById(`${item.name.toLowerCase()}-HiddenIcon`)
@@ -147,6 +151,10 @@ let userGuess = (event) => {
         scoreTag.innerText = `${counter}/${totalCharacter}`
       }
     })
+    if (counter === totalCharacter) {
+      winnerTag.style.display = 'flex'
+      inputTag.disabled = true
+    }
   }
 }
 
