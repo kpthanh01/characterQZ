@@ -43,6 +43,7 @@ let getLeagueChampions = async () => {
     leagueChampions.push(item.toLowerCase())
   })
   quizTitleTag.setAttribute('src', '/assets/leagueTitle.png')
+  quizTitleTag.setAttribute('alt', 'league title')
   totalCharacter = leagueChampions.length
   scoreTag.innerText = `0/${totalCharacter}`
 }
@@ -65,11 +66,13 @@ let getPokemon = async () => {
     iconCardTag.id = `${item.name}-HiddenIcon`
     iconCardTag.classList.add(`hidden-pokemon-icon`)
     iconCardTag.setAttribute('src', `/assets/pokeball.png`)
+    iconCardTag.setAttribute('alt', `pokeball`)
 
     characterTag.appendChild(pokemonContainer)
     characterTag.appendChild(iconCardTag)
   })
   quizTitleTag.setAttribute('src', '/assets/pokemonTitle.png')
+  quizTitleTag.setAttribute('alt', 'pokemon title')
   totalCharacter = pokemonList.length
   scoreTag.innerText = `0/${totalCharacter}`
 }
@@ -93,6 +96,7 @@ let getOverwatch = async () => {
     characterTag.appendChild(iconCardTag)
   })
   quizTitleTag.setAttribute('src', '/assets/overwatchTitle.png')
+  quizTitleTag.setAttribute('alt', 'overwatch title')
   totalCharacter = overwatchList.length
   scoreTag.innerText = `0/${totalCharacter}`
 }
