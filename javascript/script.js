@@ -5,6 +5,7 @@ const characterTag = document.getElementById('characterImg')
 const scoreTag = document.getElementById('score')
 const winnerTag = document.querySelector('.notification')
 const revealAnswersTag = document.querySelector('.reveal-answers')
+const quizTitleTag = document.querySelector('.quiz-title')
 let currentQuiz = 'league'
 let leagueChampions = []
 let pokemonList = []
@@ -41,6 +42,7 @@ let getLeagueChampions = async () => {
     characterTag.appendChild(iconCardTag)
     leagueChampions.push(item.toLowerCase())
   })
+  quizTitleTag.setAttribute('src', '/assets/leagueTitle.png')
   totalCharacter = leagueChampions.length
   scoreTag.innerText = `0/${totalCharacter}`
 }
@@ -67,6 +69,7 @@ let getPokemon = async () => {
     characterTag.appendChild(pokemonContainer)
     characterTag.appendChild(iconCardTag)
   })
+  quizTitleTag.setAttribute('src', '/assets/pokemonTitle.png')
   totalCharacter = pokemonList.length
   scoreTag.innerText = `0/${totalCharacter}`
 }
@@ -77,18 +80,19 @@ let getOverwatch = async () => {
     .catch(err => { return err })
   overwatchList = response
   overwatchList.forEach(item => {
-    let iconCardTag = document.createElement('img')
+    let iconCardTag = document.createElement('div')
     let championContainer = document.createElement('img')
     championContainer.id = `portrait-${item.name.toLowerCase()}`
     championContainer.classList.add(`overwatch`)
     championContainer.setAttribute('src', `${item.portrait}`)
+    iconCardTag.classList.add('hidden-portrait')
     iconCardTag.id = `${item.name.toLowerCase()}-HiddenIcon`
-    iconCardTag.classList.add(`hidden-overwatch-icon`)
-    iconCardTag.setAttribute('src', '/assets/overwatch.png')
+    iconCardTag.innerHTML = `<img class="hidden-overwatch-icon" src="/assets/overwatch.png" alt="overwatchIcon">`
 
     characterTag.appendChild(championContainer)
     characterTag.appendChild(iconCardTag)
   })
+  quizTitleTag.setAttribute('src', '/assets/overwatchTitle.png')
   totalCharacter = overwatchList.length
   scoreTag.innerText = `0/${totalCharacter}`
 }
@@ -206,10 +210,6 @@ let switchQuiz = (quiz) => {
   resetGame()
 }
 
-let changeScroll = () => {
-  let inputContainer = document.querySelector('.pinned-container')
-  this.scrollY > 100 ? inputContainer.classList.add('pinned-fixed') : inputContainer.classList.remove('pinned-fixed')
-}
 
 let clickOff = () => {
   winnerTag.style.display = 'none'
@@ -220,5 +220,3 @@ let clickOff = () => {
 renderInfo()
 
 inputTag.addEventListener('input', userGuess)
-
-window.addEventListener("scroll", changeScroll, false)
