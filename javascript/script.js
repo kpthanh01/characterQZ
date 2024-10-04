@@ -124,7 +124,6 @@ let userGuess = (event) => {
       let iconIdTag = document.getElementById(`${item.name}-HiddenIcon`)
       let portrait = document.getElementById(`portrait-${item.name}`)
       if (item.name === guess) {
-        console.log(item)
         let audio = new Audio(item.cries.latest)
         audio.volume = 0.05
         audio.play()
@@ -144,9 +143,7 @@ let userGuess = (event) => {
     overwatchList.forEach((item, index) => {
       let iconIdTag = document.getElementById(`${item.name.toLowerCase()}-HiddenIcon`)
       let portrait = document.getElementById(`portrait-${item.name.toLowerCase()}`)
-      console.log(item)
       if (item.name.toLowerCase() === guess) {
-        console.log(item)
         counter++
         overwatchList.splice(index, 1)
         inputTag.value = ''
