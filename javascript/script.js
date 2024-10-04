@@ -115,7 +115,7 @@ let userGuess = (event) => {
         inputTag.value = ''
         iconIdTag.style.display = 'none'
         portrait.style.display = 'block'
-        championIdTag.scrollIntoView({ behavior: "smooth", block: "end" })
+        championIdTag.scrollIntoView({ behavior: "smooth", block: "start" })
         scoreTag.innerText = `${counter}/${totalCharacter}`
       }
     })
