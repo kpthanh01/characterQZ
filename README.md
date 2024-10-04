@@ -2,7 +2,7 @@
 **A browser quiz game that will test your memory of the list of characters in various video games**
    - https://character-qz.surge.sh/
 
-<!-- ![characterQZ](/assets/characterQZ.png) -->
+![characterQZ](https://github.com/kpthanh01/characterQZ/blob/main/assets/characterQZ.png)
 
 ## How to Get Started
 1. The game by default will load League of Legends as the first quiz
